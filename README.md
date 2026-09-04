@@ -1,20 +1,23 @@
 # INTELLISORT
 
-### PLC-Based Conveyor Color Sorting System
+### PLC-Based Conveyor Color Sorting and Counting System
 
 INTELLISORT is a simulation-based industrial automation project developed using **CODESYS V3.5 SP22**.
 
-The system simulates a conveyor-based color sorting process in which products are detected, identified by color, and directed to the corresponding sorting output.
+The system simulates a conveyor-based process in which products are detected, identified by color, sorted into their corresponding categories, and counted automatically.
 
-This project demonstrates the practical application of **PLC programming, Ladder Diagram, Structured Text, HMI visualization, counters, sensor logic, and emergency-stop control**.
+This project demonstrates the practical application of **PLC programming, Ladder Diagram, Structured Text, HMI visualization, rising-edge detection, counters, sensor logic, and emergency-stop control**.
 
 ---
 
 ## Project Overview
 
-INTELLISORT is designed to simulate an automated conveyor sorting system.
+INTELLISORT combines two main functions:
 
-When a product is detected, the selected color is identified. The corresponding sorter output is activated, and after sorting confirmation, the relevant product counter is increased.
+1. **Color Sorting** — identifies products and activates the corresponding sorting output.
+2. **Product Counting** — counts each successfully confirmed red, green, and blue product separately.
+
+When a product is detected, its color is identified. The corresponding sorter output is activated. After sorting confirmation, the relevant counter increases and the sorting state is reset.
 
 The project was developed as a learning and simulation project to understand the basic workflow of an industrial automation system.
 
@@ -26,7 +29,7 @@ The project was developed as a learning and simulation project to understand the
 - Product detection
 - Red, green, and blue color identification
 - Unknown/other product detection
-- Individual sorting outputs
+- Individual color sorting outputs
 - Separate counters for each color
 - HMI-based control and monitoring
 - Simulation-only control section
@@ -52,7 +55,7 @@ Corresponding Sorter Activated
   ↓
 Sort Confirmation
   ↓
-Product Counter Increased
+Relevant Counter Increased
   ↓
 Sorter Reset
   ↓
@@ -61,16 +64,18 @@ System Ready for Next Product
 
 ---
 
-## Color Sorting Logic
+## Sorting and Counting Logic
 
 | Product Type | Sorting Output | Counter |
 |---|---|---|
-| Red | RedSorter | RedCount |
-| Green | GreenSorter | GreenCount |
-| Blue | BlueSorter | BlueCount |
+| Red | `RedSorter` | `RedCount` |
+| Green | `GreenSorter` | `GreenCount` |
+| Blue | `BlueSorter` | `BlueCount` |
 | Other/Unknown | No color sorter | No color counter |
 
 Each color has its own counter so that products are counted independently.
+
+The counter is increased only when the corresponding product has been confirmed as sorted.
 
 ---
 
@@ -82,7 +87,7 @@ The PLC executes the control logic and processes the sensor inputs.
 
 ### Conveyor Motor
 
-The conveyor transports products through the sorting process.
+The conveyor transports products through the sorting and counting process.
 
 ### Product Detection
 
@@ -103,11 +108,15 @@ The corresponding sorter output is activated according to the detected color.
 
 ### Sort Confirmation
 
-The sort confirmation signal confirms the sorting operation and triggers the counter increment.
+The sort confirmation signal confirms the sorting operation and triggers the relevant counter increment.
+
+### Product Counters
+
+Separate counters record the number of red, green, and blue products sorted.
 
 ### HMI
 
-The HMI provides operator controls, process indications, simulation buttons, and product counters.
+The HMI provides operator controls, process indications, simulation buttons, sorter status, and product counters.
 
 ---
 
@@ -161,8 +170,8 @@ The HMI provides operator controls, process indications, simulation buttons, and
 The HMI includes:
 
 - Start and Stop controls
-- Emergency Stop control
-- Process visualization
+- Emergency Stop and Reset controls
+- Conveyor and sorter status indicators
 - Product detection indication
 - Color sensor indication
 - Red, green, and blue sorter indications
@@ -170,6 +179,8 @@ The HMI includes:
 - Simulation-only color selection buttons
 - Product Detect and Sort Confirm controls
 - Run and Alarm status indications
+
+The HMI allows the operator to monitor both the **sorting process** and the **number of products sorted**.
 
 ---
 
@@ -183,7 +194,7 @@ The main HMI provides the control panel, process visualization, simulation contr
 
 ### Running State
 
-The running state shows the conveyor operating and the sorting process active during simulation.
+The running state shows the conveyor operating and the sorting and counting process during simulation.
 
 ![INTELLISORT Running State](Images/running.png)
 
@@ -204,12 +215,13 @@ To test a red product:
 3. Activate `ProductDetect`.
 4. Select the red color.
 5. Activate `SortConfirm`.
-6. Observe the red sorter and red counter.
-7. Reset the simulation before testing the next product.
+6. Observe the red sorter.
+7. Verify that `RedCount` increases.
+8. Reset the simulation before testing the next product.
 
 The same procedure can be followed for green and blue products.
 
-> The simulation controls are used to imitate sensor signals because physical sensors and actuators are not connected.
+> The simulation controls imitate sensor signals because physical sensors and actuators are not connected.
 
 ---
 
@@ -254,6 +266,7 @@ Through this project, I learned:
 - Emergency-stop handling
 - PLC simulation and testing
 - Basic industrial automation workflow
+- Combining sorting and counting functions in a PLC system
 
 ---
 
