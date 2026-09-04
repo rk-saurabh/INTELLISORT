@@ -257,20 +257,6 @@ Through this project, I learned:
 
 ---
 
-## Future Improvements
-
-- Integration with real color sensors
-- Integration with physical actuators
-- Conveyor speed control
-- Automatic product spacing
-- Fault and alarm management
-- Data logging
-- Production statistics
-- Industrial communication
-- Improved HMI diagnostics
-
----
-
 ## Author
 
 **Saurabh Verma**
